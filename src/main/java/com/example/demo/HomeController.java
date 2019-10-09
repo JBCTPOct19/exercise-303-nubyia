@@ -15,46 +15,46 @@ import javax.validation.Valid;
 public class HomeController {
 
     @Autowired
-    TodoRepository todoRepository;
+    CarRepository carRepository;
 
     @RequestMapping("/")
-    public String listTodo(Model model){
-        model.addAttribute("todos", todoRepository.findAll());
+    public String listCar(Model model){
+        model.addAttribute("cars", carRepository.findAll());
         return "list";
 
     }
 
     @GetMapping("/add")
     public String todoform(Model model){
-        model.addAttribute("todo", new Todo());
-        return "todoform";
+        model.addAttribute("cars", new Cars());
+        return "carform";
     }
 
     @PostMapping("/process")
-    public String processForm(@Valid Todo todo,
+    public String processForm(@Valid Cars cars,
                               BindingResult result){
         if (result.hasErrors()){
-            return "todoform";
+            return "carform";
         }
-        todoRepository.save(todo);
+        carRepository.save(cars);
         return "redirect:/";
     }
 
     @RequestMapping("/detail/{id}")
-    public String showTodo(@PathVariable("id") long id, Model model)
+    public String showCars(@PathVariable("id") long id, Model model)
     {
-        model.addAttribute("todo", todoRepository.findById(id).get());
+        model.addAttribute("cars", carRepository.findById(id).get());
         return "show";
     }
     @RequestMapping("/update/{id}")
-    public String updateTodo(@PathVariable("id") long id,
+    public String updateCars(@PathVariable("id") long id,
                              Model model) {
-        model.addAttribute("todo", todoRepository.findById(id).get());
-        return "todoform";
+        model.addAttribute("cars", carRepository.findById(id).get());
+        return "carform";
     }
     @RequestMapping("/delete/{id}")
-    public String delTodo(@PathVariable("id") long id){
-        todoRepository.deleteById(id);
+    public String delCars(@PathVariable("id") long id){
+        carRepository.deleteById(id);
         return "redirect:/";
 
     }
